@@ -139,6 +139,9 @@ dependencies:
   node-radius-client:
     specifier: ~1.0.0
     version: 1.0.0
+  node-radius-utils:
+    specifier: ^1.2.0
+    version: 1.2.0
   nodemailer:
     specifier: ~6.6.5
     version: 6.6.5
