@@ -7,17 +7,11 @@ class SimpleMqttServer {
     aedes = require("aedes")();
     server = require("net").createServer(this.aedes.handle);
 
-    /**
-     * @param {number} port Port to listen on
-     */
     constructor(port) {
         this.port = port;
     }
 
-    /**
-     * Start the MQTT server
-     * @returns {void}
-     */
+    /** Start the MQTT server */
     start() {
         this.server.listen(this.port, () => {
             console.log("server started and listening on port ", this.port);

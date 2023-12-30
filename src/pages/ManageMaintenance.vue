@@ -81,6 +81,8 @@ import { getResBaseURL } from "../util-frontend";
 import { getMaintenanceRelativeURL } from "../util.ts";
 import Confirm from "../components/Confirm.vue";
 import MaintenanceTime from "../components/MaintenanceTime.vue";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 export default {
     components: {
@@ -133,7 +135,7 @@ export default {
 
         /**
          * Get maintenance URL
-         * @param {number} id ID of maintenance to read
+         * @param {number} id
          * @returns {string} Relative URL
          */
         maintenanceURL(id) {
@@ -142,33 +144,27 @@ export default {
 
         /**
          * Show delete confirmation
-         * @param {number} maintenanceID ID of maintenance to show delete
-         * confirmation for.
-         * @returns {void}
+         * @param {number} maintenanceID
          */
         deleteDialog(maintenanceID) {
             this.selectedMaintenanceID = maintenanceID;
             this.$refs.confirmDelete.show();
         },
 
-        /**
-         * Delete maintenance after showing confirmation dialog
-         * @returns {void}
-         */
+        /** Delete maintenance after showing confirmation dialog */
         deleteMaintenance() {
             this.$root.deleteMaintenance(this.selectedMaintenanceID, (res) => {
-                this.$root.toastRes(res);
                 if (res.ok) {
+                    toast.success(res.msg);
                     this.$router.push("/maintenance");
+                } else {
+                    toast.error(res.msg);
                 }
             });
         },
 
         /**
          * Show dialog to confirm pause
-         * @param {number} maintenanceID ID of maintenance to confirm
-         * pause.
-         * @returns {void}
          */
         pauseDialog(maintenanceID) {
             this.selectedMaintenanceID = maintenanceID;
@@ -177,7 +173,6 @@ export default {
 
         /**
          * Pause maintenance
-         * @returns {void}
          */
         pauseMaintenance() {
             this.$root.getSocket().emit("pauseMaintenance", this.selectedMaintenanceID, (res) => {
@@ -187,8 +182,6 @@ export default {
 
         /**
          * Resume maintenance
-         * @param {number} id ID of maintenance to resume
-         * @returns {void}
          */
         resumeMaintenance(id) {
             this.$root.getSocket().emit("resumeMaintenance", id, (res) => {

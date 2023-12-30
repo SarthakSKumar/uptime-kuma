@@ -129,20 +129,21 @@
 <script>
 import { Modal } from "bootstrap";
 import VueMultiselect from "vue-multiselect";
+import { useToast } from "vue-toastification";
 import { colorOptions } from "../util-frontend";
 import Tag from "../components/Tag.vue";
+const toast = useToast();
 
 /**
  * @typedef Tag
  * @type {object}
- * @property {number | undefined} id ID of tag assignment
- * @property {number | undefined} monitor_id ID of monitor tag is
- * assigned to
- * @property {number | undefined} tag_id ID of tag
- * @property {string} value Value given to tag
- * @property {string} name Name of tag
- * @property {string} color Colour of tag
- * @property {boolean | undefined} new Should a new tag be created?
+ * @property {number | undefined} id
+ * @property {number | undefined} monitor_id
+ * @property {number | undefined} tag_id
+ * @property {string} value
+ * @property {string} name
+ * @property {string} color
+ * @property {boolean | undefined} new
  */
 
 export default {
@@ -151,8 +152,7 @@ export default {
         VueMultiselect,
     },
     props: {
-        /**
-         * Array of tags to be pre-selected
+        /** Array of tags to be pre-selected
          * @type {Tag[]}
          */
         preSelectedTags: {
@@ -244,30 +244,23 @@ export default {
         this.getExistingTags();
     },
     methods: {
-        /**
-         * Show the add tag dialog
-         * @returns {void}
-         */
+        /** Show the add tag dialog */
         showAddDialog() {
             this.modal.show();
         },
-        /**
-         * Get all existing tags
-         * @returns {void}
-         */
+        /** Get all existing tags */
         getExistingTags() {
             this.$root.getSocket().emit("getTags", (res) => {
                 if (res.ok) {
                     this.existingTags = res.tags;
                 } else {
-                    this.$root.toastError(res.msg);
+                    toast.error(res.msg);
                 }
             });
         },
         /**
          * Delete the specified tag
-         * @param {object} item Object representing tag to delete
-         * @returns {void}
+         * @param {Object} tag Object representing tag to delete
          */
         deleteTag(item) {
             if (item.new) {
@@ -280,10 +273,10 @@ export default {
         },
         /**
          * Get colour of text inside the tag
-         * @param {object} option The tag that needs to be displayed.
+         * @param {Object} option The tag that needs to be displayed.
          * Defaults to "white" unless the tag has no color, which will
          * then return the body color (based on application theme)
-         * @returns {string} Text color
+         * @returns string
          */
         textColor(option) {
             if (option.color) {
@@ -292,10 +285,7 @@ export default {
                 return this.$root.theme === "light" ? "var(--bs-body-color)" : "inherit";
             }
         },
-        /**
-         * Add a draft tag
-         * @returns {void}
-         */
+        /** Add a draft tag */
         addDraftTag() {
             console.log("Adding Draft Tag: ", this.newDraftTag);
             if (this.newDraftTag.select != null) {
@@ -323,10 +313,7 @@ export default {
             }
             this.clearDraftTag();
         },
-        /**
-         * Remove a draft tag
-         * @returns {void}
-         */
+        /** Remove a draft tag */
         clearDraftTag() {
             this.newDraftTag = {
                 name: null,
@@ -340,7 +327,7 @@ export default {
         },
         /**
          * Add a tag asynchronously
-         * @param {object} newTag Object representing new tag to add
+         * @param {Object} newTag Object representing new tag to add
          * @returns {Promise<void>}
          */
         addTagAsync(newTag) {
@@ -372,10 +359,7 @@ export default {
                 this.$root.getSocket().emit("deleteMonitorTag", tagId, monitorId, value, resolve);
             });
         },
-        /**
-         * Handle pressing Enter key when inside the modal
-         * @returns {void}
-         */
+        /** Handle pressing Enter key when inside the modal */
         onEnter() {
             if (!this.validateDraftTag.invalid) {
                 this.addDraftTag();
@@ -397,7 +381,7 @@ export default {
                     let newTagResult;
                     await this.addTagAsync(newTag).then((res) => {
                         if (!res.ok) {
-                            this.$root.toastError(res.msg);
+                            toast.error(res.msg);
                             newTagResult = false;
                         }
                         newTagResult = res.tag;
@@ -422,7 +406,7 @@ export default {
                 // Assign tag to monitor
                 await this.addMonitorTagAsync(tagId, monitorId, newTag.value).then((res) => {
                     if (!res.ok) {
-                        this.$root.toastError(res.msg);
+                        toast.error(res.msg);
                         newMonitorTagResult = false;
                     }
                     newMonitorTagResult = true;
@@ -438,7 +422,7 @@ export default {
                 let deleteMonitorTagResult;
                 await this.deleteMonitorTagAsync(deleteTag.tag_id, deleteTag.monitor_id, deleteTag.value).then((res) => {
                     if (!res.ok) {
-                        this.$root.toastError(res.msg);
+                        toast.error(res.msg);
                         deleteMonitorTagResult = false;
                     }
                     deleteMonitorTagResult = true;

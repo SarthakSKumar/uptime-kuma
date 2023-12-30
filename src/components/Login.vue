@@ -35,7 +35,7 @@
                 </button>
 
                 <div v-if="res && !res.ok" class="alert alert-danger mt-3" role="alert">
-                    {{ $t(res.msg) }}
+                    {{ res.msg }}
                 </div>
             </form>
         </div>
@@ -64,10 +64,7 @@ export default {
     },
 
     methods: {
-        /**
-         * Submit the user details and attempt to log in
-         * @returns {void}
-         */
+        /** Submit the user details and attempt to log in */
         submit() {
             this.processing = true;
 

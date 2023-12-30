@@ -7,9 +7,6 @@ const qs = require("qs");
 class AliyunSMS extends NotificationProvider {
     name = "AliyunSMS";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
 
@@ -82,9 +79,9 @@ class AliyunSMS extends NotificationProvider {
 
     /**
      * Aliyun request sign
-     * @param {object} param Parameters object to sign
+     * @param {Object} param Parameters object to sign
      * @param {string} AccessKeySecret Secret key to sign parameters with
-     * @returns {string} Base64 encoded request
+     * @returns {string}
      */
     sign(param, AccessKeySecret) {
         let param2 = {};
@@ -126,7 +123,7 @@ class AliyunSMS extends NotificationProvider {
     /**
      * Convert status constant to string
      * @param {const} status The status constant
-     * @returns {string} Status
+     * @returns {string}
      */
     statusToString(status) {
         switch (status) {

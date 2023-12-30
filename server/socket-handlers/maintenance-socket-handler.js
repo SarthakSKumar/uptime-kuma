@@ -9,7 +9,6 @@ const server = UptimeKumaServer.getInstance();
 /**
  * Handlers for Maintenance
  * @param {Socket} socket Socket.io instance
- * @returns {void}
  */
 module.exports.maintenanceSocketHandler = (socket) => {
     // Add a new maintenance
@@ -30,8 +29,7 @@ module.exports.maintenanceSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successAdded",
-                msgi18n: true,
+                msg: "Added Successfully.",
                 maintenanceID,
             });
 
@@ -62,7 +60,6 @@ module.exports.maintenanceSocketHandler = (socket) => {
             callback({
                 ok: true,
                 msg: "Saved.",
-                msgi18n: true,
                 maintenanceID: bean.id,
             });
 
@@ -98,8 +95,7 @@ module.exports.maintenanceSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successAdded",
-                msgi18n: true,
+                msg: "Added Successfully.",
             });
 
         } catch (e) {
@@ -133,8 +129,7 @@ module.exports.maintenanceSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successAdded",
-                msgi18n: true,
+                msg: "Added Successfully.",
             });
 
         } catch (e) {
@@ -253,8 +248,7 @@ module.exports.maintenanceSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successDeleted",
-                msgi18n: true,
+                msg: "Deleted Successfully.",
             });
 
             await server.sendMaintenanceList(socket);
@@ -287,8 +281,7 @@ module.exports.maintenanceSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successPaused",
-                msgi18n: true,
+                msg: "Paused Successfully.",
             });
 
             await server.sendMaintenanceList(socket);
@@ -321,8 +314,7 @@ module.exports.maintenanceSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successResumed",
-                msgi18n: true,
+                msg: "Resume Successfully",
             });
 
             await server.sendMaintenanceList(socket);

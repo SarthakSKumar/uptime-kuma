@@ -6,9 +6,6 @@ class WeCom extends NotificationProvider {
 
     name = "WeCom";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
 
@@ -29,9 +26,9 @@ class WeCom extends NotificationProvider {
 
     /**
      * Generate the message to send
-     * @param {object} heartbeatJSON Heartbeat details (For Up/Down only)
+     * @param {Object} heartbeatJSON Heartbeat details (For Up/Down only)
      * @param {string} msg General message
-     * @returns {object} Message
+     * @returns {Object}
      */
     composeMessage(heartbeatJSON, msg) {
         let title;

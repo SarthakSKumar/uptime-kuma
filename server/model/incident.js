@@ -5,7 +5,7 @@ class Incident extends BeanModel {
     /**
      * Return an object that ready to parse to JSON for public
      * Only show necessary data to public
-     * @returns {object} Object ready to parse
+     * @returns {Object}
      */
     toPublicJSON() {
         return {

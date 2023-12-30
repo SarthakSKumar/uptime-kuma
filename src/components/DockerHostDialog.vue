@@ -62,6 +62,8 @@
 <script lang="ts">
 import { Modal } from "bootstrap";
 import Confirm from "./Confirm.vue";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 export default {
     components: {
@@ -89,10 +91,7 @@ export default {
     },
     methods: {
 
-        /**
-         * Confirm deletion of docker host
-         * @returns {void}
-         */
+        /** Confirm deletion of docker host */
         deleteConfirm() {
             this.modal.hide();
             this.$refs.confirmDelete.show();
@@ -100,8 +99,7 @@ export default {
 
         /**
          * Show specified docker host
-         * @param {number} dockerHostID ID of host to show
-         * @returns {void}
+         * @param {number} dockerHostID
          */
         show(dockerHostID) {
             if (dockerHostID) {
@@ -118,7 +116,7 @@ export default {
                 }
 
                 if (!found) {
-                    this.$root.toastError("Docker Host not found!");
+                    toast.error("Docker Host not found!");
                 }
 
             } else {
@@ -133,10 +131,7 @@ export default {
             this.modal.show();
         },
 
-        /**
-         * Add docker host
-         * @returns {void}
-         */
+        /** Add docker host */
         submit() {
             this.processing = true;
             this.$root.getSocket().emit("addDockerHost", this.dockerHost, this.id, (res) => {
@@ -155,10 +150,7 @@ export default {
             });
         },
 
-        /**
-         * Test the docker host
-         * @returns {void}
-         */
+        /** Test the docker host */
         test() {
             this.processing = true;
             this.$root.getSocket().emit("testDockerHost", this.dockerHost, (res) => {
@@ -167,10 +159,7 @@ export default {
             });
         },
 
-        /**
-         * Delete this docker host
-         * @returns {void}
-         */
+        /** Delete this docker host */
         deleteDockerHost() {
             this.processing = true;
             this.$root.getSocket().emit("deleteDockerHost", this.id, (res) => {

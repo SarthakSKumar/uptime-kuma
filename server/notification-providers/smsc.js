@@ -4,9 +4,6 @@ const axios = require("axios");
 class SMSC extends NotificationProvider {
     name = "smsc";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
         try {

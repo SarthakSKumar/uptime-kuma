@@ -6,9 +6,6 @@ const Crypto = require("crypto");
 class DingDing extends NotificationProvider {
     name = "DingDing";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
 
@@ -42,8 +39,8 @@ class DingDing extends NotificationProvider {
 
     /**
      * Send message to DingDing
-     * @param {BeanModel} notification Notification to send
-     * @param {object} params Parameters of message
+     * @param {BeanModel} notification
+     * @param {Object} params Parameters of message
      * @returns {boolean} True if successful else false
      */
     async sendToDingDing(notification, params) {
@@ -69,7 +66,7 @@ class DingDing extends NotificationProvider {
      * DingDing sign
      * @param {Date} timestamp Timestamp of message
      * @param {string} secretKey Secret key to sign data with
-     * @returns {string} Base64 encoded signature
+     * @returns {string}
      */
     sign(timestamp, secretKey) {
         return Crypto
@@ -81,7 +78,7 @@ class DingDing extends NotificationProvider {
     /**
      * Convert status constant to string
      * @param {const} status The status constant
-     * @returns {string} Status
+     * @returns {string}
      */
     statusToString(status) {
         // TODO: Move to notification-provider.js to avoid repetition in classes

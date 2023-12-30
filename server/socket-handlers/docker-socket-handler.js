@@ -6,7 +6,6 @@ const { log } = require("../../src/util");
 /**
  * Handlers for docker hosts
  * @param {Socket} socket Socket.io instance
- * @returns {void}
  */
 module.exports.dockerSocketHandler = (socket) => {
     socket.on("addDockerHost", async (dockerHost, dockerHostID, callback) => {
@@ -18,8 +17,7 @@ module.exports.dockerSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "Saved.",
-                msgi18n: true,
+                msg: "Saved",
                 id: dockerHostBean.id,
             });
 
@@ -40,8 +38,7 @@ module.exports.dockerSocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successDeleted",
-                msgi18n: true,
+                msg: "Deleted",
             });
 
         } catch (e) {

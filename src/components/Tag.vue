@@ -19,13 +19,12 @@
 
 <script>
 /**
- * @typedef {import('./TagsManager.vue').Tag} Tag
- */
+* @typedef {import('./TagsManager.vue').Tag} Tag
+*/
 
 export default {
     props: {
-        /**
-         * Object representing tag
+        /** Object representing tag
          * @type {Tag}
          */
         item: {

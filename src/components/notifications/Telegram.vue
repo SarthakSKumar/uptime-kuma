@@ -58,6 +58,8 @@
 <script>
 import HiddenInput from "../HiddenInput.vue";
 import axios from "axios";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 export default {
     components: {
@@ -66,7 +68,7 @@ export default {
     methods: {
         /**
          * Get the URL for telegram updates
-         * @param {string} mode Should the token be masked?
+         * @param {string} [mode=masked] Should the token be masked?
          * @returns {string} formatted URL
          */
         telegramGetUpdatesURL(mode = "masked") {
@@ -83,11 +85,7 @@ export default {
             return `https://api.telegram.org/bot${token}/getUpdates`;
         },
 
-        /**
-         * Get the telegram chat ID
-         * @returns {void}
-         * @throws The chat ID could not be found
-         */
+        /** Get the telegram chat ID */
         async autoGetTelegramChatID() {
             try {
                 let res = await axios.get(this.telegramGetUpdatesURL("withToken"));
@@ -108,7 +106,7 @@ export default {
                 }
 
             } catch (error) {
-                this.$root.toastError(error.message);
+                toast.error(error.message);
             }
 
         },

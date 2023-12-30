@@ -6,9 +6,6 @@ class LunaSea extends NotificationProvider {
 
     name = "lunasea";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
         let lunaseaurl = "";

@@ -65,9 +65,9 @@ export default {
     methods: {
         /**
          * Format the subject of the certificate
-         * @param {object} subject Object representing the certificates
+         * @param {Object} subject Object representing the certificates
          * subject
-         * @returns {string} Certificate subject
+         * @returns {string}
          */
         formatSubject(subject) {
             if (subject.O && subject.CN && subject.C) {

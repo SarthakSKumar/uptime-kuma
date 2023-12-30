@@ -457,7 +457,6 @@ export default {
 
         /**
          * If the monitor is added to public list, which will not be in this list.
-         * @returns {object[]} List of monitors
          */
         sortedMonitorList() {
             let result = [];
@@ -602,8 +601,7 @@ export default {
 
         /**
          * If connected to the socket and logged in, request private data of this statusPage
-         * @param {boolean} loggedIn Is the client logged in?
-         * @returns {void}
+         * @param connected
          */
         "$root.loggedIn"(loggedIn) {
             if (loggedIn) {
@@ -618,7 +616,7 @@ export default {
                         }
 
                     } else {
-                        this.$root.toastError(res.msg);
+                        toast.error(res.msg);
                     }
                 });
             }
@@ -626,8 +624,6 @@ export default {
 
         /**
          * Selected a monitor and add to the list.
-         * @param {object} monitor Monitor to add
-         * @returns {void}
          */
         selectedMonitor(monitor) {
             if (monitor) {
@@ -734,7 +730,7 @@ export default {
         /**
          * Get status page data
          * It should be preloaded in window.preloadData
-         * @returns {Promise<any>} Status page data
+         * @returns {Promise<any>}
          */
         getData: function () {
             if (window.preloadData) {
@@ -749,16 +745,13 @@ export default {
         /**
          * Provide syntax highlighting for CSS
          * @param {string} code Text to highlight
-         * @returns {string} Highlighted CSS
+         * @returns {string}
          */
         highlighter(code) {
             return highlight(code, languages.css);
         },
 
-        /**
-         * Update the heartbeat list and update favicon if necessary
-         * @returns {void}
-         */
+        /** Update the heartbeat list and update favicon if neccessary */
         updateHeartbeatList() {
             // If editMode, it will use the data from websocket.
             if (! this.editMode) {
@@ -806,10 +799,7 @@ export default {
             }, 1000);
         },
 
-        /**
-         * Enable editing mode
-         * @returns {void}
-         */
+        /** Enable editing mode */
         edit() {
             if (this.hasToken) {
                 this.$root.initSocketIO(true);
@@ -821,10 +811,7 @@ export default {
             }
         },
 
-        /**
-         * Save the status page
-         * @returns {void}
-         */
+        /** Save the status page */
         save() {
             this.loading = true;
             let startTime = new Date();
@@ -855,42 +842,33 @@ export default {
             });
         },
 
-        /**
-         * Show dialog confirming deletion
-         * @returns {void}
-         */
+        /** Show dialog confirming deletion */
         deleteDialog() {
             this.$refs.confirmDelete.show();
         },
 
-        /**
-         * Request deletion of this status page
-         * @returns {void}
-         */
+        /** Request deletion of this status page */
         deleteStatusPage() {
             this.$root.getSocket().emit("deleteStatusPage", this.slug, (res) => {
                 if (res.ok) {
                     this.enableEditMode = false;
                     location.href = "/manage-status-page";
                 } else {
-                    this.$root.toastError(res.msg);
+                    toast.error(res.msg);
                 }
             });
         },
 
         /**
-         * Returns label for a specified monitor
-         * @param {object} monitor Object representing monitor
-         * @returns {string} Monitor label
+         * Returns label for a specifed monitor
+         * @param {Object} monitor Object representing monitor
+         * @returns {string}
          */
         monitorSelectorLabel(monitor) {
             return `${monitor.name}`;
         },
 
-        /**
-         * Add a group to the status page
-         * @returns {void}
-         */
+        /** Add a group to the status page */
         addGroup() {
             let groupName = this.$t("Untitled Group");
 
@@ -904,18 +882,12 @@ export default {
             });
         },
 
-        /**
-         * Add a domain to the status page
-         * @returns {void}
-         */
+        /** Add a domain to the status page */
         addDomainField() {
             this.config.domainNameList.push("");
         },
 
-        /**
-         * Discard changes to status page
-         * @returns {void}
-         */
+        /** Discard changes to status page */
         discard() {
             location.href = "/status/" + this.slug;
         },
@@ -923,26 +895,19 @@ export default {
         /**
          * Set URL of new image after successful crop operation
          * @param {string} imgDataUrl URL of image in data:// format
-         * @returns {void}
          */
         cropSuccess(imgDataUrl) {
             this.imgDataUrl = imgDataUrl;
         },
 
-        /**
-         * Show image crop dialog if in edit mode
-         * @returns {void}
-         */
+        /** Show image crop dialog if in edit mode */
         showImageCropUploadMethod() {
             if (this.editMode) {
                 this.showImageCropUpload = true;
             }
         },
 
-        /**
-         * Create an incident for this status page
-         * @returns {void}
-         */
+        /** Create an incident for this status page */
         createIncident() {
             this.enableEditIncidentMode = true;
 
@@ -957,13 +922,10 @@ export default {
             };
         },
 
-        /**
-         * Post the incident to the status page
-         * @returns {void}
-         */
+        /** Post the incident to the status page */
         postIncident() {
             if (this.incident.title === "" || this.incident.content === "") {
-                this.$root.toastError("Please input title and content");
+                toast.error(this.$t("Please input title and content"));
                 return;
             }
 
@@ -973,26 +935,20 @@ export default {
                     this.enableEditIncidentMode = false;
                     this.incident = res.incident;
                 } else {
-                    this.$root.toastError(res.msg);
+                    toast.error(res.msg);
                 }
 
             });
 
         },
 
-        /**
-         * Click Edit Button
-         * @returns {void}
-         */
+        /** Click Edit Button */
         editIncident() {
             this.enableEditIncidentMode = true;
             this.previousIncident = Object.assign({}, this.incident);
         },
 
-        /**
-         * Cancel creation or editing of incident
-         * @returns {void}
-         */
+        /** Cancel creation or editing of incident */
         cancelIncident() {
             this.enableEditIncidentMode = false;
 
@@ -1002,10 +958,7 @@ export default {
             }
         },
 
-        /**
-         * Unpin the incident
-         * @returns {void}
-         */
+        /** Unpin the incident */
         unpinIncident() {
             this.$root.getSocket().emit("unpinIncident", this.slug, () => {
                 this.incident = null;
@@ -1014,8 +967,7 @@ export default {
 
         /**
          * Get the relative time difference of a date from now
-         * @param {any} date Date to get time difference
-         * @returns {string} Time difference
+         * @returns {string}
          */
         dateFromNow(date) {
             return dayjs.utc(date).fromNow();
@@ -1024,7 +976,6 @@ export default {
         /**
          * Remove a domain from the status page
          * @param {number} index Index of domain to remove
-         * @returns {void}
          */
         removeDomain(index) {
             this.config.domainNameList.splice(index, 1);
@@ -1032,7 +983,7 @@ export default {
 
         /**
          * Generate sanitized HTML from maintenance description
-         * @param {string} description Text to sanitize
+         * @param {string} description
          * @returns {string} Sanitized HTML
          */
         maintenanceHTML(description) {
@@ -1246,6 +1197,20 @@ footer {
                 color: #1d2634;
             }
         }
+    }
+}
+
+/* required class */
+.css-editor {
+    /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
+
+    border-radius: 1rem;
+    padding: 10px 5px;
+    border: 1px solid #ced4da;
+
+    .dark & {
+        background: $dark-bg;
+        border: 1px solid $dark-border-color;
     }
 }
 

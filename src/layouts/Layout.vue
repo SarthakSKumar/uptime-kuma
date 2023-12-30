@@ -117,23 +117,12 @@
                 {{ $t("Settings") }}
             </router-link>
         </nav>
-
-        <button
-            v-if="numActiveToasts != 0"
-            type="button"
-            class="btn btn-normal clear-all-toast-btn"
-            @click="clearToasts"
-        >
-            <font-awesome-icon icon="times" />
-        </button>
     </div>
 </template>
 
 <script>
 import Login from "../components/Login.vue";
 import compareVersions from "compare-versions";
-import { useToast } from "vue-toastification";
-const toast = useToast();
 
 export default {
 
@@ -142,11 +131,7 @@ export default {
     },
 
     data() {
-        return {
-            toastContainer: null,
-            numActiveToasts: 0,
-            toastContainerObserver: null,
-        };
+        return {};
     },
 
     computed: {
@@ -174,34 +159,11 @@ export default {
     },
 
     mounted() {
-        this.toastContainer = document.querySelector(".bottom-right.toast-container");
 
-        // Watch the number of active toasts
-        this.toastContainerObserver = new MutationObserver((mutations) => {
-            for (const mutation of mutations) {
-                if (mutation.type === "childList") {
-                    this.numActiveToasts = mutation.target.children.length;
-                }
-            }
-        });
-
-        if (this.toastContainer != null) {
-            this.toastContainerObserver.observe(this.toastContainer, { childList: true });
-        }
-    },
-
-    beforeUnmount() {
-        this.toastContainerObserver.disconnect();
     },
 
     methods: {
-        /**
-         * Clear all toast notifications.
-         * @returns {void}
-         */
-        clearToasts() {
-            toast.clear();
-        }
+
     },
 
 };
@@ -361,26 +323,4 @@ main {
         background-color: $dark-bg;
     }
 }
-
-.clear-all-toast-btn {
-    position: fixed;
-    right: 1em;
-    bottom: 1em;
-    font-size: 1.2em;
-    padding: 9px 15px;
-    width: 48px;
-    box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-
-    .dark & {
-        box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.5);
-    }
-}
-
-@media (max-width: 770px) {
-    .clear-all-toast-btn {
-        bottom: 72px;
-    }
-}
-
 </style>

@@ -131,7 +131,6 @@ export default {
         /**
          * Remove the specified group
          * @param {number} index Index of group to remove
-         * @returns {void}
          */
         removeGroup(index) {
             this.$root.publicGroupList.splice(index, 1);
@@ -142,7 +141,6 @@ export default {
          * @param {number} groupIndex Index of group to remove monitor
          * from
          * @param {number} index Index of monitor to remove
-         * @returns {void}
          */
         removeMonitor(groupIndex, index) {
             this.$root.publicGroupList[groupIndex].monitorList.splice(index, 1);
@@ -152,10 +150,10 @@ export default {
          * Should a link to the monitor be shown?
          * Attempts to guess if a link should be shown based upon if
          * sendUrl is set and if the URL is default or not.
-         * @param {object} monitor Monitor to check
-         * @param {boolean} ignoreSendUrl Should the presence of the sendUrl
+         * @param {Object} monitor Monitor to check
+         * @param {boolean} [ignoreSendUrl=false] Should the presence of the sendUrl
          * property be ignored. This will only work in edit mode.
-         * @returns {boolean} Should the link be shown
+         * @returns {boolean}
          */
         showLink(monitor, ignoreSendUrl = false) {
             // We must check if there are any elements in monitorList to
@@ -163,13 +161,13 @@ export default {
             if (this.$parent.editMode && ignoreSendUrl && Object.keys(this.$root.monitorList).length) {
                 return this.$root.monitorList[monitor.element.id].type === "http" || this.$root.monitorList[monitor.element.id].type === "keyword" || this.$root.monitorList[monitor.element.id].type === "json-query";
             }
-            return monitor.element.sendUrl && monitor.element.url && monitor.element.url !== "https://";
+            return monitor.element.sendUrl && monitor.element.url && monitor.element.url !== "https://" && !this.editMode;
         },
 
         /**
          * Returns formatted certificate expiry or Bad cert message
-         * @param {object} monitor Monitor to show expiry for
-         * @returns {string} Certificate expiry message
+         * @param {Object} monitor Monitor to show expiry for
+         * @returns {string}
          */
         formattedCertExpiryMessage(monitor) {
             if (monitor?.element?.validCert && monitor?.element?.certExpiryDaysRemaining) {
@@ -182,9 +180,9 @@ export default {
         },
 
         /**
-         * Returns certificate expiry color based on days remaining
-         * @param {object} monitor Monitor to show expiry for
-         * @returns {string} Color for certificate expiry
+         * Returns certificate expiry based on days remaining
+         * @param {Object} monitor Monitor to show expiry for
+         * @returns {string}
          */
         certExpiryColor(monitor) {
             if (monitor?.element?.validCert && monitor.element.certExpiryDaysRemaining > 7) {

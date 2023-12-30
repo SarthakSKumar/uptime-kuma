@@ -279,9 +279,8 @@ export default {
     methods: {
         /**
          * Setting monitor
-         * @param {number} monitorId ID of monitor
-         * @param {string} monitorName Name of monitor
-         * @returns {void}
+         * @param {number} monitorId    ID of monitor
+         * @param {string} monitorName  Name of monitor
          */
         show(monitorId, monitorName) {
             this.monitor = {

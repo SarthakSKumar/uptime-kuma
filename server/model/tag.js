@@ -4,7 +4,7 @@ class Tag extends BeanModel {
 
     /**
      * Return an object that ready to parse to JSON
-     * @returns {object} Object ready to parse
+     * @returns {Object}
      */
     toJSON() {
         return {

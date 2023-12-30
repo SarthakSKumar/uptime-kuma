@@ -6,9 +6,6 @@ class ServerChan extends NotificationProvider {
 
     name = "ServerChan";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
         try {
@@ -26,8 +23,8 @@ class ServerChan extends NotificationProvider {
 
     /**
      * Get the formatted title for message
-     * @param {?object} heartbeatJSON Heartbeat details (For Up/Down only)
-     * @param {?object} monitorJSON Monitor details (For Up/Down only)
+     * @param {?Object} monitorJSON Monitor details (For Up/Down only)
+     * @param {?Object} heartbeatJSON Heartbeat details (For Up/Down only)
      * @returns {string} Formatted title
      */
     checkStatus(heartbeatJSON, monitorJSON) {

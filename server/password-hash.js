@@ -4,8 +4,8 @@ const saltRounds = 10;
 
 /**
  * Hash a password
- * @param {string} password Password to hash
- * @returns {string} Hash
+ * @param {string} password
+ * @returns {string}
  */
 exports.generate = function (password) {
     return bcrypt.hashSync(password, saltRounds);
@@ -13,8 +13,8 @@ exports.generate = function (password) {
 
 /**
  * Verify a password against a hash
- * @param {string} password Password to verify
- * @param {string} hash Hash to verify against
+ * @param {string} password
+ * @param {string} hash
  * @returns {boolean} Does the password match the hash?
  */
 exports.verify = function (password, hash) {
@@ -27,8 +27,8 @@ exports.verify = function (password, hash) {
 
 /**
  * Is the hash a SHA1 hash
- * @param {string} hash Hash to check
- * @returns {boolean} Is SHA1 hash?
+ * @param {string} hash
+ * @returns {boolean}
  */
 function isSHA1(hash) {
     return (typeof hash === "string" && hash.startsWith("sha1"));
@@ -36,8 +36,7 @@ function isSHA1(hash) {
 
 /**
  * Does the hash need to be rehashed?
- * @param {string} hash Hash to check
- * @returns {boolean} Needs to be rehashed?
+ * @returns {boolean}
  */
 exports.needRehash = function (hash) {
     return isSHA1(hash);

@@ -28,9 +28,11 @@
 </template>
 
 <script>
+import { useToast } from "vue-toastification";
 import TagEditDialog from "../../components/TagEditDialog.vue";
 import Tag from "../Tag.vue";
 import Confirm from "../Confirm.vue";
+const toast = useToast();
 
 export default {
     components: {
@@ -84,7 +86,7 @@ export default {
                 if (res.ok) {
                     this.tagsList = res.tags;
                 } else {
-                    this.$root.toastError(res.msg);
+                    toast.error(res.msg);
                 }
             });
         },
@@ -136,7 +138,7 @@ export default {
         /**
          * Get monitors which has a specific tag locally
          * @param {number} tagId id of the tag to filter
-         * @returns {object[]} list of monitors which has a specific tag
+         * @returns {Object[]} list of monitors which has a specific tag
          */
         monitorsByTag(tagId) {
             return Object.values(this.$root.monitorList).filter((monitor) => {

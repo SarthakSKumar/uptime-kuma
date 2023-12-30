@@ -9,9 +9,8 @@ const { Settings } = require("../settings");
 const { sendAPIKeyList } = require("../client");
 
 /**
- * Handlers for API keys
+ * Handlers for Maintenance
  * @param {Socket} socket Socket.io instance
- * @returns {void}
  */
 module.exports.apiKeySocketHandler = (socket) => {
     // Add a new api key
@@ -38,8 +37,7 @@ module.exports.apiKeySocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successAdded",
-                msgi18n: true,
+                msg: "Added Successfully.",
                 key: formattedKey,
                 keyID: bean.id,
             });
@@ -83,8 +81,7 @@ module.exports.apiKeySocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successDeleted",
-                msgi18n: true,
+                msg: "Deleted Successfully.",
             });
 
             await sendAPIKeyList(socket);
@@ -111,8 +108,7 @@ module.exports.apiKeySocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successDisabled",
-                msgi18n: true,
+                msg: "Disabled Successfully.",
             });
 
             await sendAPIKeyList(socket);
@@ -139,8 +135,7 @@ module.exports.apiKeySocketHandler = (socket) => {
 
             callback({
                 ok: true,
-                msg: "successEnabled",
-                msgi18n: true,
+                msg: "Enabled Successfully",
             });
 
             await sendAPIKeyList(socket);

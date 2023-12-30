@@ -5,9 +5,6 @@ class Pushover extends NotificationProvider {
 
     name = "pushover";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
         let pushoverlink = "https://api.pushover.net/1/messages.json";

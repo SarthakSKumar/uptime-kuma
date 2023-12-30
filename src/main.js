@@ -20,7 +20,6 @@ import dayjs from "dayjs";
 import timezone from "./modules/dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { loadToastSettings } from "./util-frontend";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(relativeTime);
@@ -45,7 +44,11 @@ const app = createApp({
 app.use(router);
 app.use(i18n);
 
-app.use(Toast, loadToastSettings());
+const options = {
+    position: "bottom-right",
+};
+
+app.use(Toast, options);
 app.component("Editable", contenteditable);
 app.component("FontAwesomeIcon", FontAwesomeIcon);
 

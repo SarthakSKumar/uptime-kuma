@@ -5,9 +5,6 @@ class SMSManager extends NotificationProvider {
 
     name = "SMSManager";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         try {
             let data = {

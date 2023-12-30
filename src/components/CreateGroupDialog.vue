@@ -43,17 +43,10 @@ export default {
         this.modal = new Modal(this.$refs.modal);
     },
     methods: {
-        /**
-         * Show the confirm dialog
-         * @returns {void}
-         */
+        /** Show the confirm dialog */
         show() {
             this.modal.show();
         },
-        /**
-         * Dialog confirmed
-         * @returns {void}
-         */
         confirm() {
             this.$emit("added", this.groupName);
             this.modal.hide();

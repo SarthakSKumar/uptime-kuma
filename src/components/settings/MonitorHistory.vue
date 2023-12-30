@@ -57,6 +57,9 @@
 <script>
 import Confirm from "../../components/Confirm.vue";
 import { log } from "../../util.ts";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 export default {
     components: {
@@ -91,10 +94,7 @@ export default {
     },
 
     methods: {
-        /**
-         * Get the current size of the database
-         * @returns {void}
-         */
+        /** Get the current size of the database */
         loadDatabaseSize() {
             log.debug("monitorhistory", "load database size");
             this.$root.getSocket().emit("getDatabaseSize", (res) => {
@@ -107,39 +107,30 @@ export default {
             });
         },
 
-        /**
-         * Request that the database is shrunk
-         * @returns {void}
-         */
+        /** Request that the database is shrunk */
         shrinkDatabase() {
             this.$root.getSocket().emit("shrinkDatabase", (res) => {
                 if (res.ok) {
                     this.loadDatabaseSize();
-                    this.$root.toastSuccess("Done");
+                    toast.success("Done");
                 } else {
                     log.debug("monitorhistory", res);
                 }
             });
         },
 
-        /**
-         * Show the dialog to confirm clearing stats
-         * @returns {void}
-         */
+        /** Show the dialog to confirm clearing stats */
         confirmClearStatistics() {
             this.$refs.confirmClearStatistics.show();
         },
 
-        /**
-         * Send the request to clear stats
-         * @returns {void}
-         */
+        /** Send the request to clear stats */
         clearStatistics() {
             this.$root.clearStatistics((res) => {
                 if (res.ok) {
                     this.$router.go();
                 } else {
-                    this.$root.toastError(res.msg);
+                    toast.error(res.msg);
                 }
             });
         },

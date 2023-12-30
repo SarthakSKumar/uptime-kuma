@@ -131,10 +131,7 @@ export default {
     },
 
     methods: {
-        /**
-         * Show dialog to confirm deletion
-         * @returns {void}
-         */
+        /** Show dialog to confirm deletion */
         deleteConfirm() {
             this.modal.hide();
             this.$refs.confirmDelete.show();
@@ -143,7 +140,6 @@ export default {
         /**
          * Show settings for specified proxy
          * @param {number} proxyID ID of proxy to show
-         * @returns {void}
          */
         show(proxyID) {
             if (proxyID) {
@@ -173,10 +169,7 @@ export default {
             this.modal.show();
         },
 
-        /**
-         * Submit form data for saving
-         * @returns {void}
-         */
+        /** Submit form data for saving */
         submit() {
             this.processing = true;
             this.$root.getSocket().emit("addProxy", this.proxy, this.id, (res) => {
@@ -194,10 +187,7 @@ export default {
             });
         },
 
-        /**
-         * Delete this proxy
-         * @returns {void}
-         */
+        /** Delete this proxy */
         deleteProxy() {
             this.processing = true;
             this.$root.getSocket().emit("deleteProxy", this.id, (res) => {

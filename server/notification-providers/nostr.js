@@ -33,9 +33,6 @@ if (semver.lt(nodeVersion, "16.0.0")) {
 class Nostr extends NotificationProvider {
     name = "nostr";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         // All DMs should have same timestamp
         const createdAt = Math.floor(Date.now() / 1000);
@@ -89,11 +86,6 @@ class Nostr extends NotificationProvider {
         return `${successfulRelays}/${relays.length} relays connected.`;
     }
 
-    /**
-     * Get the private key for the sender
-     * @param {string} sender Sender to retrieve key for
-     * @returns {nip19.DecodeResult} Private key
-     */
     async getPrivateKey(sender) {
         try {
             const senderDecodeResult = await nip19.decode(sender);
@@ -104,11 +96,6 @@ class Nostr extends NotificationProvider {
         }
     }
 
-    /**
-     * Get public keys for recipients
-     * @param {string} recipients Newline delimited list of recipients
-     * @returns {nip19.DecodeResult[]} Public keys
-     */
     async getPublicKeys(recipients) {
         const recipientsList = recipients.split("\n");
         const publicKeys = [];

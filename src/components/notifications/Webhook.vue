@@ -12,7 +12,9 @@
     </div>
 
     <div class="mb-3">
-        <label for="webhook-request-body" class="form-label">{{ $t("Request Body") }}</label>
+        <label for="webhook-request-body" class="form-label">{{
+            $t("Request Body")
+        }}</label>
         <select
             id="webhook-request-body"
             v-model="$parent.notification.webhookContentType"
@@ -24,29 +26,40 @@
             <option value="custom">{{ $t("webhookBodyCustomOption") }}</option>
         </select>
 
-        <div v-if="$parent.notification.webhookContentType == 'json'" class="form-text">{{ $t("webhookJsonDesc", ['"application/json"']) }}</div>
-        <i18n-t v-else-if="$parent.notification.webhookContentType == 'form-data'" tag="div" keypath="webhookFormDataDesc" class="form-text">
-            <template #multipart>multipart/form-data"</template>
-            <template #decodeFunction>
-                <strong>json_decode($_POST['data'])</strong>
-            </template>
-        </i18n-t>
-        <template v-else-if="$parent.notification.webhookContentType == 'custom'">
-            <i18n-t tag="div" keypath="liquidIntroduction" class="form-text">
-                <a href="https://liquidjs.com/" target="_blank">{{ $t("documentation") }}</a>
-            </i18n-t>
-            <code v-pre>{{msg}}</code>: {{ $t("templateMsg") }}<br />
-            <code v-pre>{{heartbeatJSON}}</code>: {{ $t("templateHeartbeatJSON") }} <b>({{ $t("templateLimitedToUpDownNotifications") }})</b><br />
-            <code v-pre>{{monitorJSON}}</code>: {{ $t("templateMonitorJSON") }} <b>({{ $t("templateLimitedToUpDownCertNotifications") }})</b><br />
+        <div class="form-text">
+            <div v-if="$parent.notification.webhookContentType == 'json'">
+                <p>{{ $t("webhookJsonDesc", ['"application/json"']) }}</p>
+            </div>
+            <div v-if="$parent.notification.webhookContentType == 'form-data'">
+                <i18n-t tag="p" keypath="webhookFormDataDesc">
+                    <template #multipart>multipart/form-data"</template>
+                    <template #decodeFunction>
+                        <strong>json_decode($_POST['data'])</strong>
+                    </template>
+                </i18n-t>
+            </div>
+            <div v-if="$parent.notification.webhookContentType == 'custom'">
+                <i18n-t tag="p" keypath="webhookCustomBodyDesc">
+                    <template #msg>
+                        <code>msg</code>
+                    </template>
+                    <template #heartbeat>
+                        <code>heartbeatJSON</code>
+                    </template>
+                    <template #monitor>
+                        <code>monitorJSON</code>
+                    </template>
+                </i18n-t>
+            </div>
+        </div>
 
-            <textarea
-                id="customBody"
-                v-model="$parent.notification.webhookCustomBody"
-                class="form-control"
-                :placeholder="customBodyPlaceholder"
-                required
-            ></textarea>
-        </template>
+        <textarea
+            v-if="$parent.notification.webhookContentType == 'custom'"
+            id="customBody"
+            v-model="$parent.notification.webhookCustomBody"
+            class="form-control"
+            :placeholder="customBodyPlaceholder"
+        ></textarea>
     </div>
 
     <div class="mb-3">
@@ -54,14 +67,15 @@
             <input v-model="showAdditionalHeadersField" class="form-check-input" type="checkbox">
             <label class="form-check-label">{{ $t("webhookAdditionalHeadersTitle") }}</label>
         </div>
-        <div class="form-text">{{ $t("webhookAdditionalHeadersDesc") }}</div>
+        <div class="form-text">
+            <i18n-t tag="p" keypath="webhookAdditionalHeadersDesc"> </i18n-t>
+        </div>
         <textarea
             v-if="showAdditionalHeadersField"
             id="additionalHeaders"
             v-model="$parent.notification.webhookAdditionalHeaders"
             class="form-control"
             :placeholder="headersPlaceholder"
-            :required="showAdditionalHeadersField"
         ></textarea>
     </div>
 </template>
@@ -76,18 +90,18 @@ export default {
     computed: {
         headersPlaceholder() {
             return this.$t("Example:", [
-`{
+                `
+{
     "Authorization": "Authorization Token"
 }`,
             ]);
         },
         customBodyPlaceholder() {
-            return this.$t("Example:", [
-`{
-    "Title": "Uptime Kuma Alert{% if monitorJSON %} - {{ monitorJSON['name'] }}{% endif %}",
+            return `Example:
+{
+    "Title": "Uptime Kuma Alert - {{ monitorJSON['name'] }}",
     "Body": "{{ msg }}"
-}`
-            ]);
+}`;
         }
     },
 };

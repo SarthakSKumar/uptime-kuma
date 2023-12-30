@@ -5,9 +5,6 @@ class Twilio extends NotificationProvider {
 
     name = "twilio";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
 
         let okMsg = "Sent Successfully.";

@@ -14,19 +14,12 @@ class StatusPage extends BeanModel {
     static domainMappingList = { };
 
     /**
-     * Handle responses to status page
-     * @param {Response} response Response object
-     * @param {string} indexHTML HTML to render
-     * @param {string} slug Status page slug
-     * @returns {void}
+     *
+     * @param {Response} response
+     * @param {string} indexHTML
+     * @param {string} slug
      */
     static async handleStatusPageResponse(response, indexHTML, slug) {
-        // Handle url with trailing slash (http://localhost:3001/status/)
-        // The slug comes from the route "/status/:slug". If the slug is empty, express converts it to "index.html"
-        if (slug === "index.html") {
-            slug = "default";
-        }
-
         let statusPage = await R.findOne("status_page", " slug = ? ", [
             slug
         ]);
@@ -40,9 +33,8 @@ class StatusPage extends BeanModel {
 
     /**
      * SSR for status pages
-     * @param {string} indexHTML HTML page to render
-     * @param {StatusPage} statusPage Status page populate HTML with
-     * @returns {void}
+     * @param {string} indexHTML
+     * @param {StatusPage} statusPage
      */
     static async renderHTML(indexHTML, statusPage) {
         const $ = cheerio.load(indexHTML);
@@ -95,8 +87,7 @@ class StatusPage extends BeanModel {
 
     /**
      * Get all status page data in one call
-     * @param {StatusPage} statusPage Status page to get data for
-     * @returns {object} Status page data
+     * @param {StatusPage} statusPage
      */
     static async getStatusPageData(statusPage) {
         const config = await statusPage.toPublicJSON();
@@ -151,7 +142,7 @@ class StatusPage extends BeanModel {
      * Send status page list to client
      * @param {Server} io io Socket server instance
      * @param {Socket} socket Socket.io instance
-     * @returns {Promise<Bean[]>} Status page list
+     * @returns {Promise<Bean[]>}
      */
     static async sendStatusPageList(io, socket) {
         let result = {};
@@ -168,7 +159,7 @@ class StatusPage extends BeanModel {
 
     /**
      * Update list of domain names
-     * @param {string[]} domainNameList List of status page domains
+     * @param {string[]} domainNameList
      * @returns {Promise<void>}
      */
     async updateDomainNameList(domainNameList) {
@@ -212,7 +203,7 @@ class StatusPage extends BeanModel {
 
     /**
      * Get list of domain names
-     * @returns {object[]} List of status page domains
+     * @returns {Object[]}
      */
     getDomainNameList() {
         let domainList = [];
@@ -228,7 +219,7 @@ class StatusPage extends BeanModel {
 
     /**
      * Return an object that ready to parse to JSON
-     * @returns {object} Object ready to parse
+     * @returns {Object}
      */
     async toJSON() {
         return {
@@ -252,7 +243,7 @@ class StatusPage extends BeanModel {
     /**
      * Return an object that ready to parse to JSON for public
      * Only show necessary data to public
-     * @returns {object} Object ready to parse
+     * @returns {Object}
      */
     async toPublicJSON() {
         return {
@@ -273,8 +264,7 @@ class StatusPage extends BeanModel {
 
     /**
      * Convert slug to status page ID
-     * @param {string} slug Status page slug
-     * @returns {Promise<number>} ID of status page
+     * @param {string} slug
      */
     static async slugToID(slug) {
         return await R.getCell("SELECT id FROM status_page WHERE slug = ? ", [
@@ -284,7 +274,7 @@ class StatusPage extends BeanModel {
 
     /**
      * Get path to the icon for the page
-     * @returns {string} Path
+     * @returns {string}
      */
     getIcon() {
         if (!this.icon) {
@@ -297,7 +287,7 @@ class StatusPage extends BeanModel {
     /**
      * Get list of maintenances
      * @param {number} statusPageId ID of status page to get maintenance for
-     * @returns {object} Object representing maintenances sanitized for public
+     * @returns {Object} Object representing maintenances sanitized for public
      */
     static async getMaintenanceList(statusPageId) {
         try {

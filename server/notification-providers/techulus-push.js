@@ -5,9 +5,6 @@ class TechulusPush extends NotificationProvider {
 
     name = "PushByTechulus";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
 

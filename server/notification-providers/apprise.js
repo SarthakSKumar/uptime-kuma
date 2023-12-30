@@ -5,9 +5,6 @@ class Apprise extends NotificationProvider {
 
     name = "apprise";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         const args = [ "-vv", "-b", msg, notification.appriseURL ];
         if (notification.title) {

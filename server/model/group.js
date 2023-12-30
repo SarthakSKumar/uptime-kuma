@@ -4,12 +4,10 @@ const { R } = require("redbean-node");
 class Group extends BeanModel {
 
     /**
-     * Return an object that ready to parse to JSON for public Only show
-     * necessary data to public
-     * @param {boolean} showTags Should the JSON include monitor tags
-     * @param {boolean} certExpiry Should JSON include info about
-     * certificate expiry?
-     * @returns {object} Object ready to parse
+     * Return an object that ready to parse to JSON for public
+     * Only show necessary data to public
+     * @param {boolean} [showTags=false] Should the JSON include monitor tags
+     * @returns {Object}
      */
     async toPublicJSON(showTags = false, certExpiry = false) {
         let monitorBeanList = await this.getMonitorList();
@@ -29,7 +27,7 @@ class Group extends BeanModel {
 
     /**
      * Get all monitors
-     * @returns {Bean[]} List of monitors
+     * @returns {Bean[]}
      */
     async getMonitorList() {
         return R.convertToBeans("monitor", await R.getAll(`

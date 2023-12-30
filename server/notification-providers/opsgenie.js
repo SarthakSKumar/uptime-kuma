@@ -68,11 +68,11 @@ class Opsgenie extends NotificationProvider {
     }
 
     /**
-     * Make POST request to Opsgenie
-     * @param {BeanModel} notification Notification to send
+     *
+     * @param {BeanModel} notification
      * @param {string} url Request url
-     * @param {object} data Request body
-     * @returns {Promise<string>} Success message
+     * @param {Object} data Request body
+     * @returns {Promise<string>}
      */
     async post(notification, url, data) {
         let config = {

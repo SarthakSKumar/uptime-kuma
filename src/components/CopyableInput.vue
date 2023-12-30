@@ -90,25 +90,19 @@ export default {
     },
     methods: {
 
-        /**
-         * Show the input
-         * @returns {void}
-         */
+        /** Show the input */
         showInput() {
             this.visibility = "text";
         },
 
-        /**
-         * Hide the input
-         * @returns {void}
-         */
+        /** Hide the input */
         hideInput() {
             this.visibility = "password";
         },
 
         /**
          * Copy the provided text to the users clipboard
-         * @param {string} textToCopy Text to copy to clipboard
+         * @param {string} textToCopy
          * @returns {Promise<void>}
          */
         copyToClipboard(textToCopy) {

@@ -19,7 +19,7 @@ class APIKey extends BeanModel {
 
     /**
      * Returns an object that ready to parse to JSON
-     * @returns {object} Object ready to parse
+     * @returns {Object}
      */
     toJSON() {
         return {
@@ -37,7 +37,7 @@ class APIKey extends BeanModel {
     /**
      * Returns an object that ready to parse to JSON with sensitive fields
      * removed
-     * @returns {object} Object ready to parse
+     * @returns {Object}
      */
     toPublicJSON() {
         return {
@@ -53,9 +53,9 @@ class APIKey extends BeanModel {
 
     /**
      * Create a new API Key and store it in the database
-     * @param {object} key Object sent by client
+     * @param {Object} key Object sent by client
      * @param {int} userID ID of socket user
-     * @returns {Promise<bean>} API key
+     * @returns {Promise<bean>}
      */
     static async save(key, userID) {
         let bean;

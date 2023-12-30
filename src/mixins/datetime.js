@@ -14,9 +14,8 @@ export default {
     methods: {
         /**
          * Convert value to UTC
-         * @param {string | number | Date | dayjs.Dayjs} value Time
-         * value to convert
-         * @returns {dayjs.Dayjs} Converted time
+         * @param {string | number | Date | dayjs.Dayjs} value
+         * @returns {dayjs.Dayjs}
          */
         toUTC(value) {
             return dayjs.tz(value, this.timezone).utc().format();
@@ -24,9 +23,8 @@ export default {
 
         /**
          * Used for <input type="datetime" />
-         * @param {string | number | Date | dayjs.Dayjs} value Value to
-         * convert
-         * @returns {string} Datetime string
+         * @param value
+         * @returns {string}
          */
         toDateTimeInputFormat(value) {
             return this.datetimeFormat(value, "YYYY-MM-DDTHH:mm");
@@ -35,7 +33,7 @@ export default {
         /**
          * Return a given value in the format YYYY-MM-DD HH:mm:ss
          * @param {any} value Value to format as date time
-         * @returns {string} Formatted string
+         * @returns {string}
          */
         datetime(value) {
             return this.datetimeFormat(value, "YYYY-MM-DD HH:mm:ss");
@@ -43,9 +41,8 @@ export default {
 
         /**
          * Get time for maintenance
-         * @param {string | number | Date | dayjs.Dayjs} value Time to
-         * format
-         * @returns {string} Formatted string
+         * @param {string | number | Date | dayjs.Dayjs} value
+         * @returns {string}
          */
         datetimeMaintenance(value) {
             const inputDate = new Date(value);
@@ -61,7 +58,7 @@ export default {
         /**
          * Return a given value in the format YYYY-MM-DD
          * @param {any} value  Value to format as date
-         * @returns {string} Formatted string
+         * @returns {string}
          */
         date(value) {
             return this.datetimeFormat(value, "YYYY-MM-DD");
@@ -72,7 +69,7 @@ export default {
          * to true, HH:mm:ss
          * @param {any} value Value to format
          * @param {boolean} second Should seconds be included?
-         * @returns {string} Formatted string
+         * @returns {string}
          */
         time(value, second = true) {
             let secondString;
@@ -88,7 +85,7 @@ export default {
          * Return a value in a custom format
          * @param {any} value Value to format
          * @param {any} format Format to return value in
-         * @returns {string} Formatted string
+         * @returns {string}
          */
         datetimeFormat(value, format) {
             if (value !== undefined && value !== "") {

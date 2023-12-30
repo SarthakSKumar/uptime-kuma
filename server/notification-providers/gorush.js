@@ -5,9 +5,6 @@ class Gorush extends NotificationProvider {
 
     name = "gorush";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
 

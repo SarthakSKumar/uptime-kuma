@@ -21,7 +21,10 @@ import { BarController, BarElement, Chart, Filler, LinearScale, LineController, 
 import "chartjs-adapter-dayjs-4";
 import dayjs from "dayjs";
 import { Line } from "vue-chartjs";
+import { useToast } from "vue-toastification";
 import { DOWN, PENDING, MAINTENANCE, log } from "../util.ts";
+
+const toast = useToast();
 
 Chart.register(LineController, BarController, LineElement, PointElement, TimeScale, BarElement, LinearScale, Tooltip, Filler);
 
@@ -228,7 +231,7 @@ export default {
 
                 this.$root.getMonitorBeats(this.monitorId, newPeriod, (res) => {
                     if (!res.ok) {
-                        this.$root.toastError(res.msg);
+                        toast.error(res.msg);
                     } else {
                         this.heartbeatList = res.data;
                         this.$root.storage()[`chart-period-${this.monitorId}`] = newPeriod;

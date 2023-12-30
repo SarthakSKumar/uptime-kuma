@@ -5,9 +5,6 @@ class OneBot extends NotificationProvider {
 
     name = "OneBot";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
         try {

@@ -36,7 +36,7 @@ class Prometheus {
     monitorLabelValues = {};
 
     /**
-     * @param {object} monitor Monitor object to monitor
+     * @param {Object} monitor Monitor object to monitor
      */
     constructor(monitor) {
         this.monitorLabelValues = {
@@ -50,9 +50,8 @@ class Prometheus {
 
     /**
      * Update the metrics page
-     * @param {object} heartbeat Heartbeat details
-     * @param {object} tlsInfo TLS details
-     * @returns {void}
+     * @param {Object} heartbeat Heartbeat details
+     * @param {Object} tlsInfo TLS details
      */
     update(heartbeat, tlsInfo) {
 
@@ -100,10 +99,7 @@ class Prometheus {
         }
     }
 
-    /**
-     * Remove monitor from prometheus
-     * @returns {void}
-     */
+    /** Remove monitor from prometheus */
     remove() {
         try {
             monitorCertDaysRemaining.remove(this.monitorLabelValues);

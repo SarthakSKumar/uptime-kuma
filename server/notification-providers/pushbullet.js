@@ -7,9 +7,6 @@ class Pushbullet extends NotificationProvider {
 
     name = "pushbullet";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
 

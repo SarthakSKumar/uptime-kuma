@@ -39,10 +39,7 @@ const initBackgroundJobs = async function () {
 
 };
 
-/**
- * Stop all background jobs if running
- * @returns {void}
- */
+/** Stop all background jobs if running */
 const stopBackgroundJobs = function () {
     for (const job of jobs) {
         if (job.croner) {

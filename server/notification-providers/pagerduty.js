@@ -39,8 +39,7 @@ class PagerDuty extends NotificationProvider {
 
     /**
      * Check if result is successful, result code should be in range 2xx
-     * @param {object} result Axios response object
-     * @returns {void}
+     * @param {Object} result Axios response object
      * @throws {Error} The status code is not in range 2xx
      */
     checkResult(result) {
@@ -57,9 +56,9 @@ class PagerDuty extends NotificationProvider {
      * @param {BeanModel} notification Message title
      * @param {string} title Message title
      * @param {string} body Message
-     * @param {object} monitorInfo Monitor details (For Up/Down only)
+     * @param {Object} monitorInfo Monitor details (For Up/Down only)
      * @param {?string} eventAction Action event for PagerDuty (trigger, acknowledge, resolve)
-     * @returns {Promise<string>} Success message
+     * @returns {string}
      */
     async postNotification(notification, title, body, monitorInfo, eventAction = "trigger") {
 

@@ -20,7 +20,7 @@
                             <span v-if="hasChildren" class="collapse-padding" @click.prevent="changeCollapsed">
                                 <font-awesome-icon icon="chevron-down" class="animated" :class="{ collapsed: isCollapsed}" />
                             </span>
-                            {{ monitor.name }}
+                            {{ monitorName }}
                         </div>
                         <div v-if="monitor.tags.length > 0" class="tags">
                             <Tag v-for="tag in monitor.tags" :key="tag" :item="tag" :size="'sm'" />
@@ -44,6 +44,7 @@
                 <MonitorListItem
                     v-for="(item, index) in sortedChildMonitorList"
                     :key="index" :monitor="item"
+                    :showPathName="showPathName"
                     :isSelectMode="isSelectMode"
                     :isSelected="isSelected"
                     :select="select"
@@ -74,6 +75,11 @@ export default {
             type: Object,
             default: null,
         },
+        /** Should the monitor name show it's parent */
+        showPathName: {
+            type: Boolean,
+            default: false,
+        },
         /** If the user is in select mode */
         isSelectMode: {
             type: Boolean,
@@ -99,16 +105,6 @@ export default {
             type: Function,
             default: () => {}
         },
-        /** Function to filter child monitors */
-        filterFunc: {
-            type: Function,
-            default: () => {}
-        },
-        /** Function to sort child monitors */
-        sortFunc: {
-            type: Function,
-            default: () => {},
-        }
     },
     data() {
         return {
@@ -119,13 +115,32 @@ export default {
         sortedChildMonitorList() {
             let result = Object.values(this.$root.monitorList);
 
-            // Get children
             result = result.filter(childMonitor => childMonitor.parent === this.monitor.id);
 
-            // Run filter on children
-            result = result.filter(this.filterFunc);
+            result.sort((m1, m2) => {
 
-            result.sort(this.sortFunc);
+                if (m1.active !== m2.active) {
+                    if (m1.active === 0) {
+                        return 1;
+                    }
+
+                    if (m2.active === 0) {
+                        return -1;
+                    }
+                }
+
+                if (m1.weight !== m2.weight) {
+                    if (m1.weight > m2.weight) {
+                        return -1;
+                    }
+
+                    if (m1.weight < m2.weight) {
+                        return 1;
+                    }
+                }
+
+                return m1.name.localeCompare(m2.name);
+            });
 
             return result;
         },
@@ -137,6 +152,13 @@ export default {
                 marginLeft: `${31 * this.depth}px`,
             };
         },
+        monitorName() {
+            if (this.showPathName) {
+                return this.monitor.pathName;
+            } else {
+                return this.monitor.name;
+            }
+        }
     },
     watch: {
         isSelectMode() {
@@ -167,9 +189,7 @@ export default {
     },
     methods: {
         /**
-         * Changes the collapsed value of the current monitor and saves
-         * it to local storage
-         * @returns {void}
+         * Changes the collapsed value of the current monitor and saves it to local storage
          */
         changeCollapsed() {
             this.isCollapsed = !this.isCollapsed;
@@ -194,7 +214,6 @@ export default {
         },
         /**
          * Toggle selection of monitor
-         * @returns {void}
          */
         toggleSelection() {
             if (this.isSelected(this.monitor.id)) {

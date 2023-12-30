@@ -5,9 +5,6 @@ class SMSEagle extends NotificationProvider {
 
     name = "SMSEagle";
 
-    /**
-     * @inheritdoc
-     */
     async send(notification, msg, monitorJSON = null, heartbeatJSON = null) {
         let okMsg = "Sent Successfully.";
 
