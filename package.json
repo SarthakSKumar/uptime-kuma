@@ -9,6 +9,7 @@
     "engines": {
         "node": "14 || 16 || 18 || >= 20.4.0"
     },
+    "packageManager": "pnpm@9.3.0",
     "scripts": {
         "begin": "pnpm install && pnpm build",
         "install-legacy": "npm install",
